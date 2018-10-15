@@ -11,7 +11,8 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isDisplayForm: false
+      isDisplayForm: false,
+      taskEditting: null
     }
   }
 
@@ -60,10 +61,21 @@ class App extends Component {
 
   onSubmit(data){
     var { tasks } = this.state;
-    data.id = this.onGenerateID();
+
+    // console.log(data)
+
+    if(data.id === '') {
+      data.id = this.onGenerateID();
     
-    // push task into tasks
-    tasks.push(data);
+      // push task into tasks
+      tasks.push(data);
+    } else {
+      var indexItemUpdated = tasks.findIndex((task, index) => {
+        return task.id === data.id;
+      })
+
+      tasks[indexItemUpdated] = data;
+    }
 
     //setter state
     this.setState({
@@ -73,6 +85,7 @@ class App extends Component {
 
     // set list task into localStorage
     localStorage.setItem('tasks', JSON.stringify(tasks))
+    this.onCloseForm();
   }
 
   onUpdateStatus(id){
@@ -108,11 +121,33 @@ class App extends Component {
     // Save localStorage
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
+    this.onCloseForm();
+  }
+
+
+  onShowForm() {
+    this.setState({
+      isDisplayForm: true,
+    })
+  }
+
+  onUpdate(id) {
+    var {tasks} = this.state;
+
+    var ItemUpdated = tasks.find((task) => {
+      return task.id === id
+    })
+
+    this.setState({
+      taskEditting: ItemUpdated
+    }) 
+
+    this.onShowForm();
   }
 
   render() {
 
-    let { tasks, isDisplayForm } = this.state;
+    let { tasks, isDisplayForm, taskEditting } = this.state;
 
     return (
         <div className="container">
@@ -121,7 +156,10 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              {(isDisplayForm) ? <TaskForm onSubmit={this.onSubmit.bind(this)} onCloseForm={this.onCloseForm.bind(this)}/> : '' }
+              {(isDisplayForm) ? <TaskForm 
+                                    onSubmit={this.onSubmit.bind(this)} 
+                                    onCloseForm={this.onCloseForm.bind(this)}
+                                    task={taskEditting}/> : '' }
             </div>
             <div className={isDisplayForm? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
               
@@ -140,7 +178,8 @@ class App extends Component {
               <TaskList 
                 Tasks={ tasks } 
                 onUpdateStatus={this.onUpdateStatus.bind(this)}
-                onRemoveTask={this.onRemoveTask.bind(this)}/>
+                onRemoveTask={this.onRemoveTask.bind(this)}
+                onUpdate={this.onUpdate.bind(this)}/>
             </div>
           </div>
         </div>
