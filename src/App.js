@@ -79,7 +79,8 @@ class App extends Component {
 
     //setter state
     this.setState({
-      tasks: tasks
+      tasks: tasks,
+      taskEditting: null
     })
 
 
