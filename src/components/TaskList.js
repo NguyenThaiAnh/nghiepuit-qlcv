@@ -28,8 +28,6 @@ class TaskList extends Component {
 
   render() {
 
-    console.log(this.props.todos)
-
     var {Tasks} = this.props;
 
     var { filterName, filterStatus } = this.state;
