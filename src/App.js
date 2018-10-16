@@ -17,7 +17,12 @@ class App extends Component {
         name: '',
         status: -1
       },
-      keyword: ''
+      keyword: '',
+      // Default sort by name and increase
+      sort: {
+        by: 'name',
+        value: 1
+      }
     }
   }
 
@@ -168,9 +173,18 @@ class App extends Component {
     });
   }
 
+  onSort(sortName, sortValue) {
+    this.setState({
+      sort: {
+        by: sortName,
+        value: sortValue
+      }
+    });
+  }
+
   render() {
 
-    let { tasks, isDisplayForm, taskEditting, filter, keyword } = this.state;
+    let { tasks, isDisplayForm, taskEditting, filter, keyword, sort } = this.state;
     if(filter) {
       if (filter.name) {
         tasks = tasks.filter((task) => {
@@ -193,6 +207,20 @@ class App extends Component {
     }
 
     
+
+    if(sort.by === 'name'){
+      tasks.sort((a, b) => {
+        if(a.name > b.name) return sort.value;
+        else if (a.name < b.name) return -sort.value;
+        else return 0;
+      })
+    } else {
+      tasks.sort((a, b) => {
+        if(a.status > b.status) return -sort.value;
+        else if (a.status < b.status) return sort.value;
+        else return 0;
+      })
+    }
 
     return (
         <div className="container">
@@ -218,7 +246,10 @@ class App extends Component {
                       className="btn btn-success"
                       onClick={ this.onGenerateData.bind(this) } >Generate data</button> */}
 
-              <TaskControl onSearch={this.onSearch.bind(this)}/>
+              <TaskControl 
+                onSearch={this.onSearch.bind(this)}
+                onSort={this.onSort.bind(this)}
+                />
 
               <TaskList 
                 Tasks={ tasks } 
