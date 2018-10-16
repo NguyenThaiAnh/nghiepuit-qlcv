@@ -251,12 +251,19 @@ class App extends Component {
                 onSort={this.onSort.bind(this)}
                 />
 
-              <TaskList 
+              {/* <TaskList 
                 Tasks={ tasks } 
                 onUpdateStatus={this.onUpdateStatus.bind(this)}
                 onRemoveTask={this.onRemoveTask.bind(this)}
                 onUpdate={this.onUpdate.bind(this)}
                 onFilter={this.onFilter.bind(this)}
+                /> */}
+
+                <TaskList 
+                  onUpdateStatus={this.onUpdateStatus.bind(this)}
+                  onRemoveTask={this.onRemoveTask.bind(this)}
+                  onUpdate={this.onUpdate.bind(this)}
+                  onFilter={this.onFilter.bind(this)}
                 />
             </div>
           </div>

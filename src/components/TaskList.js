@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TaskItem from './TaskItem'
+import { connect } from 'react-redux'; // ket noi len store
 
 
 class TaskList extends Component {
@@ -26,6 +27,8 @@ class TaskList extends Component {
   }
 
   render() {
+
+    console.log(this.props.todos)
 
     var {Tasks} = this.props;
 
@@ -82,4 +85,11 @@ class TaskList extends Component {
   }
 }
 
-export default TaskList;
+// Trong redux nó sẽ hỗ trợ chyeen các state của thằng store thành các props của component
+const mapStateToProps = (state) => {
+   return { 
+    Tasks : state.tasks
+   }
+}
+export default  connect(mapStateToProps, null)(TaskList);
+   
