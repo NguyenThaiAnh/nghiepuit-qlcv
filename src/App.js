@@ -12,7 +12,11 @@ class App extends Component {
     this.state = {
       tasks: [],
       isDisplayForm: false,
-      taskEditting: null
+      taskEditting: null,
+      filter: {
+        name: '',
+        status: -1
+      }
     }
   }
 
@@ -146,9 +150,34 @@ class App extends Component {
     this.onShowForm();
   }
 
+  onFilter(filterName, filterStatus) {
+    filterStatus = +filterStatus;
+
+    this.setState({
+      filter: {
+        name: filterName.toLowerCase(),
+        status: filterStatus
+      }
+    })
+  }
+
   render() {
 
-    let { tasks, isDisplayForm, taskEditting } = this.state;
+    let { tasks, isDisplayForm, taskEditting, filter } = this.state;
+    if(filter) {
+      if (filter.name) {
+        tasks = tasks.filter((task) => {
+          return task.name.indexOf(filter.name) !== -1
+        })
+      }
+      tasks = tasks.filter((task) => {
+        if(filter.status === -1) {
+          return tasks;
+        } else {
+          return task.status === (filter.status === 1 ? true : false);
+        }
+      })
+    }
 
     return (
         <div className="container">
@@ -180,7 +209,9 @@ class App extends Component {
                 Tasks={ tasks } 
                 onUpdateStatus={this.onUpdateStatus.bind(this)}
                 onRemoveTask={this.onRemoveTask.bind(this)}
-                onUpdate={this.onUpdate.bind(this)}/>
+                onUpdate={this.onUpdate.bind(this)}
+                onFilter={this.onFilter.bind(this)}
+                />
             </div>
           </div>
         </div>
