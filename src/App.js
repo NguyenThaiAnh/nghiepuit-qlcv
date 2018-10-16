@@ -16,7 +16,8 @@ class App extends Component {
       filter: {
         name: '',
         status: -1
-      }
+      },
+      keyword: ''
     }
   }
 
@@ -161,9 +162,15 @@ class App extends Component {
     })
   }
 
+  onSearch(keyword) {
+    this.setState({
+      keyword: keyword
+    });
+  }
+
   render() {
 
-    let { tasks, isDisplayForm, taskEditting, filter } = this.state;
+    let { tasks, isDisplayForm, taskEditting, filter, keyword } = this.state;
     if(filter) {
       if (filter.name) {
         tasks = tasks.filter((task) => {
@@ -178,6 +185,14 @@ class App extends Component {
         }
       })
     }
+
+    if(keyword) {
+      tasks = tasks.filter((task) => {
+        return task.name.indexOf(keyword) !== -1
+      });
+    }
+
+    
 
     return (
         <div className="container">
@@ -203,7 +218,7 @@ class App extends Component {
                       className="btn btn-success"
                       onClick={ this.onGenerateData.bind(this) } >Generate data</button> */}
 
-              <TaskControl/>
+              <TaskControl onSearch={this.onSearch.bind(this)}/>
 
               <TaskList 
                 Tasks={ tasks } 
