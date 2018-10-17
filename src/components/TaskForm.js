@@ -116,6 +116,9 @@ const mapStateToProps = (state) => {
   return {
     onAddTask: (task) => {
       dispath(actions.addTask(task));
+    },
+    onCloseForm: () => {
+      dispath(actions.closeForm());
     }
   }
  }
