@@ -14,13 +14,23 @@ class TaskForm extends Component {
   }
 
   componentWillMount() {
-    if(this.props.task) {
-      this.setState({
-        id: this.props.task.id,
-        name: this.props.task.name,
-        status: this.props.task.status
-      })
-    }
+    console.log('dis',this.props.itemEditting)
+    // if(this.props.itemEditting) {
+    //   this.setState({
+    //     id: this.props.itemEditting.id,
+    //     name: this.props.itemEditting.name,
+    //     status: this.props.itemEditting.status
+    //   })
+    // }
+  }
+  
+  componentDidMount() {
+    console.log('dis',this.props.itemEditting)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    
+    console.log('douma', nextProps)
   }
 
   onCloseForm() {
@@ -62,6 +72,7 @@ class TaskForm extends Component {
 
     var { id } = this.state;
 
+    if (!this.props.isDisplayForm) return '';
     return (
         <div className="panel panel-warning">
           <div className="panel-heading"><h3 className="panel-title">{(id !== '')? 'Cập nhật công việc' : 'Thêm Công Việc'}<span
@@ -106,11 +117,13 @@ class TaskForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
+  console.log(state)
   return {
-
+      isDisplayForm : state.isDisplayForm,
+      itemEditing : state.itemEditting
   }
-}
+};
 
  const mapDispathToProps = (dispath, props) => {
   return {

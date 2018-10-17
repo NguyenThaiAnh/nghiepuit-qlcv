@@ -9,11 +9,14 @@ class TaskItem extends Component {
   }
 
   onUpdate() {
-    this.props.onUpdate(this.props.task.id);
+    this.props.onOpenForm();
+    console.log(this.props.task)
+    this.props.onEditTask(this.props.task);
   }
 
   onRemove() {
     this.props.onDeleteTask(this.props.task.id);
+    this.props.onCloseForm()
   }
 
   render() {
@@ -53,6 +56,15 @@ const mapDispathToProps = (dispath, props) => {
     },
     onDeleteTask: (id) => {
       dispath(actions.deleteTask(id));
+    },
+    onCloseForm: () => {
+      dispath(actions.closeForm());
+    },
+    onOpenForm: () => {
+      dispath(actions.openForm());
+    },
+    onEditTask: (task) => {
+      dispath(actions.editTask(task));
     }
   }
 }
