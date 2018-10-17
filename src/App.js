@@ -41,21 +41,21 @@ class App extends Component {
 
 
 
-  onUpdateStatus(id){
-    var { tasks } = this.state;
+  // onUpdateStatus(id){
+  //   var { tasks } = this.state;
 
-    // Find task have id 
-    var idOfTasks = tasks.filter((task) => task.id === id)
+  //   // Find task have id 
+  //   var idOfTasks = tasks.filter((task) => task.id === id)
     
-    // Set new status
-    idOfTasks[0].status = !idOfTasks[0].status;
-    this.setState({
-      tasks
-    })
+  //   // Set new status
+  //   idOfTasks[0].status = !idOfTasks[0].status;
+  //   this.setState({
+  //     tasks
+  //   })
 
-    // Save localStorage
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
+  //   // Save localStorage
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // }
 
   onRemoveTask(id) {
     var {tasks} = this.state;
@@ -172,9 +172,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              {(isDisplayForm) ? <TaskForm 
-                                    onCloseForm={this.onCloseForm.bind(this)}
-                                    task={taskEditting}/> : '' }
+              {(isDisplayForm) ? <TaskForm task={taskEditting}/> : '' }
             </div>
             <div className={isDisplayForm? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
               
@@ -202,7 +200,6 @@ class App extends Component {
                 /> */}
 
                 <TaskList 
-                  onUpdateStatus={this.onUpdateStatus.bind(this)}
                   onRemoveTask={this.onRemoveTask.bind(this)}
                   onUpdate={this.onUpdate.bind(this)}
                   onFilter={this.onFilter.bind(this)}
