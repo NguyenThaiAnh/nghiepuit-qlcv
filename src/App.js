@@ -57,25 +57,25 @@ class App extends Component {
   //   localStorage.setItem('tasks', JSON.stringify(tasks));
   // }
 
-  onRemoveTask(id) {
-    var {tasks} = this.state;
+  // onRemoveTask(id) {
+  //   var {tasks} = this.state;
 
-    // find index of Item need removed
-    var itemRemovedIndex = tasks.findIndex((task, index) => {
-      return task.id === id; 
-    })
+  //   // find index of Item need removed
+  //   var itemRemovedIndex = tasks.findIndex((task, index) => {
+  //     return task.id === id; 
+  //   })
 
-    // Remove Item
-    tasks.splice(itemRemovedIndex, 1);
-    this.setState({
-      tasks
-    })
+  //   // Remove Item
+  //   tasks.splice(itemRemovedIndex, 1);
+  //   this.setState({
+  //     tasks
+  //   })
 
-    // Save localStorage
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+  //   // Save localStorage
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    this.onCloseForm();
-  }
+  //   this.onCloseForm();
+  // }
 
 
   onShowForm() {
@@ -200,7 +200,6 @@ class App extends Component {
                 /> */}
 
                 <TaskList 
-                  onRemoveTask={this.onRemoveTask.bind(this)}
                   onUpdate={this.onUpdate.bind(this)}
                   onFilter={this.onFilter.bind(this)}
                 />

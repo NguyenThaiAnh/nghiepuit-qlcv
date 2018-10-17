@@ -32,16 +32,21 @@ var myReducer = (state = initialState, action) => {
             var { id } = action
             // Find task have id 
             let idOfTasks = state.findIndex(task => task.id === id)
-            
-            // let cloneTask = {...state[idOfTasks]}; 
-            // cloneTask.status = !cloneTask.status;
-            // state[idOfTasks] = cloneTask;
 
             state[idOfTasks] = {
                 ...state[idOfTasks],
                 status: !state[idOfTasks].status
             }
+            // Save localStorage
+            localStorage.setItem('tasks', JSON.stringify(state));
+            return [...state];
 
+        case types.DELETE_TASK:
+            let { id } = action;
+                // find index of Item need removed
+            var itemRemovedIndex = state.findIndex((task, index) => task.id === id);
+            state.splice(itemRemovedIndex, 1);
+            
             // Save localStorage
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];

@@ -8,12 +8,12 @@ class TaskItem extends Component {
     this.props.onUpdateStatus(this.props.task.id);
   }
 
-  onRemove() {
-    this.props.onRemoveTask(this.props.task.id);
-  }
-
   onUpdate() {
     this.props.onUpdate(this.props.task.id);
+  }
+
+  onRemove() {
+    this.props.onDeleteTask(this.props.task.id);
   }
 
   render() {
@@ -50,6 +50,9 @@ const mapDispathToProps = (dispath, props) => {
   return {
     onUpdateStatus: (id) => {
       dispath(actions.updateStatus(id));
+    },
+    onDeleteTask: (id) => {
+      dispath(actions.deleteTask(id));
     }
   }
 }
